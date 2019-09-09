@@ -1,0 +1,36 @@
+<?php 
+
+                          global $database;
+                          if(isset($_POST['save_'])) {
+                          $rem = $_POST['remarks'];
+                          $cids = $_POST['cid'];
+                          $database->exec("UPDATE " . TBL_COMPLAINT . " SET status = '2', remarks = '$rem' WHERE comp_id = '$cids' ");
+                          $session->message("<div class='alert alert-success'><h3>Well Done!</h3> Complaint Successfully Saved.</div>");
+                          echo "<script type='text/javascript'>window.location = 'monitor.php?Save Successfully!';</script>";
+                          }
+
+                          if(isset($_POST['done_'])) {
+                          $rem = $_POST['remarks'];
+                          $cids = $_POST['cid'];
+                          $database->exec("UPDATE " . TBL_COMPLAINT . " SET status = '5', remarks = '$rem', res_date = NOW() WHERE comp_id = '$cids' ");
+                          $session->message("<div class='alert alert-success'><h3>Well Done!</h3> Complaint Successfully Saved.</div>");
+                          echo "<script type='text/javascript'>window.location = 'monitor.php?Save Successfully!';</script>";
+                        }
+
+                         global $database;
+                          if(isset($_POST['saves_'])) {
+                          $rem = $_POST['remarks'];
+                          $cids = $_POST['cid'];
+                          $database->exec("UPDATE " . TBL_COMPLAINT . " SET status = '2', remarks = '$rem' WHERE comp_id = '$cids' ");
+                          $session->message("<div class='alert alert-success'><h3>Well Done!</h3> Complaint Successfully Saved.</div>");
+                          echo "<script type='text/javascript'>window.location = 'monitor.php?Save Successfully!';</script>";
+                          }
+
+                          if(isset($_POST['dones_'])) {
+                          $rem = $_POST['remarks'];
+                          $cids = $_POST['cid'];
+                          $database->exec("UPDATE " . TBL_COMPLAINT . " SET status = '5', remarks = '$rem', res_date = NOW() WHERE comp_id = '$cids' ");
+                          $session->message("<div class='alert alert-success'><h3>Well Done!</h3> Complaint Successfully Saved.</div>");
+                          echo "<script type='text/javascript'>window.location = 'monitor.php?Save Successfully!';</script>";
+                        } 
+                        ?>

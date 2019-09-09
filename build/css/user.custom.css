@@ -1,0 +1,108 @@
+input {
+	text-transform: uppercase;
+}
+
+textarea{
+	resize: none;
+	text-transform: uppercase;
+}
+
+select, option {
+	text-transform: uppercase;
+}
+/*.complaint_monitor {
+	background: blue;
+}*/
+
+/* .complaint_panel {
+	max-height: 620px;
+}
+.complaint_panel .table {
+	max-height: 540px;
+} */
+
+.complaint_panel  .table > thead > tr > th {
+	background: silver;
+	color: white;
+	text-align: center;
+}
+
+.control_table .table > thead > tr > th {
+	text-align: center;
+	background: #2a3f54;
+	color: #A4A4A4;
+	font-family: sans-serif;
+	height: 1.8em;
+	padding-top: 1em;
+}
+
+#side_pic {
+	width: 60px;
+	height: 60px;
+}
+
+
+.prev_pic {
+	height: 250px;
+	width: 250px;
+}
+
+#act {
+	height: 70px;
+	text-align: center;
+	margin-top: 50px;
+	padding-top: 25px;
+	opacity: .9;
+}
+
+.acts {
+	opacity: .9;
+}
+
+.maintain_form {
+	font-size: 15px;
+}
+.label_desc {
+	font-style: italic;
+	text-transform: uppercase;
+	font-size: .9em;
+}
+.label_desc:hover{
+	color: #8BC8FC;
+}
+
+.c_logo:hover {
+	color: #38970A;
+}
+
+.content_details {
+	font-style: italic;
+	font-family: sans-serif, "Maiandra GD";
+}
+
+#btn_status {
+	height: 520px;
+	color: black;
+}
+.counter {
+	color: #fff;
+}
+.counter:hover {
+	color: #0801A0;
+}
+
+#assisted_user {
+	border:blue;
+}
+
+.modal_logo {
+	width: 40px;
+	height: 40px;
+}
+
+.title_logo {
+	width: 55px;
+	height: 40px;
+}
+
+

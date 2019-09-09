@@ -1,0 +1,71 @@
+<?php 
+                    global $database;
+                    $tableContent = '';
+                    $start = '';
+                    $strt = '';
+
+                    $stmt = $database->prepare("SELECT * FROM " . TBL_COMPLAINT . " WHERE cat_comp_id = '1' AND status BETWEEN '2' AND '5' ");
+                    $stmt->execute(array(':start' => $start. '%'));
+                    $g_allBio = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    foreach ($g_allBio as $gb) {
+                      $time_one = new DateTime($gb['req_date']);
+                      $time_two = new DateTime($gb['res_date']);
+                      $difference = $time_one->diff($time_two);
+                      $tableContent = $tableContent . "<tr>"
+                                                      . "<td>". $gb['comp_id'] . "</td>"
+                                                      . "<td>". $gb['ticket'] ."</td>"
+                                                      . "<td>". $gb['subject'] ."</td>"
+                                                      . "<td>". date('M. d Y', strtotime($gb['req_date'])) . "<br>" . date('h:i A', strtotime($gb['req_date'])) ."</td>"
+                                                      . "<td>". ( $gb['res_date'] != '0000-00-00 00:00:00' ? date('M. d Y', strtotime($gb['res_date'])) . "<br>" . date('h:i A', strtotime($gb['res_date'])) : '&hellip;') ."</td>"
+                                                      . "<td>". $difference->format('%h hrs <br> %i minutes') ."</td>"
+                                                      . "<td>". ucwords($gb['assisted']) ."</td>"
+                                                      . "<td>". ($gb['status'] == 5 ? "<i class='fa fa-check-square-o'></i> RESOLVED"
+                                                                                    : ($gb['status'] == 2 ? "<i class='fa fa-exclamation-triangle'></i> PENDING"
+                                                                                    : "<i class='fa fa-exclamation-triangle'></i> PENDING")) ."</td>"
+                                                    . "</tr>";
+                    }
+
+
+                    if(isset($_POST['search_'])) {
+                      $start = $_POST['status'];
+                      $strt = $_POST['dept_n'];
+                      $from = date('Y-m-d', strtotime($_POST['fromdate']));
+                      $to = date('Y-m-d', strtotime($_POST['todate'])); 
+                      $tableContent = '';
+                      $stmt = $database->prepare("SELECT c.*, cc.*, d.* FROM " . TBL_COMPLAINT . " c 
+                                                 INNER JOIN " . TBL_COMP . " cc ON cc.cat_comp_id = c.cat_comp_id
+                                                 INNER JOIN " . TBL_DEPT . " d ON c.dept_id = d.dept_id 
+                                                 WHERE c.status LIKE '%".$start."%' 
+                                                 AND d.dept_id LIKE '%".$strt."%' 
+                                                 AND c.cat_comp_id  = '1'
+                                                 AND DATE(c.req_date) BETWEEN '$from' AND '$to'
+                                                 AND c.status BETWEEN '2' AND '5' ");
+                      
+                      $stmt->execute(array(':start'=>$start.'%', ':start' => $strt.'%'));
+                      $g_allBio = $stmt->fetchAll();
+                      echo "<div> REPORT FROM : <h3>" . date('M. d Y', strtotime($from)) . " TO " . date('M. d Y', strtotime($from)) .  "</h3></div>";
+                      foreach ($g_allBio as $gb) {
+                        $time_one = new DateTime($gb['req_date']);
+                        $time_two = new DateTime($gb['res_date']);
+                        $difference = $time_one->diff($time_two);
+
+                        $tableContent = $tableContent   
+                                                        . "<tr>"
+                                                          . "<td>". $gb['comp_id'] . "</td>"
+                                                          . "<td>". $gb['ticket'] ."</td>"
+                                                          . "<td>". ucfirst($gb['subject']) ."</td>"
+                                                          . "<td>". date('M. d Y', strtotime($gb['req_date'])) . "<br>" . date('h:i A', strtotime($gb['req_date'])) ."</td>"
+                                                          . "<td>". ( $gb['res_date'] != '0000-00-00 00:00:00' ? date('M. d Y', strtotime($gb['res_date'])) . "<br>" . date('h:i A', strtotime($gb['res_date'])) : '&hellip;') ."</td>"
+                                                          . "<td>". $difference->format('%h hrs <br> %i minutes') ."</td>"
+                                                          . "<td>". ucwords($gb['assisted']) ."</td>"
+                                                          . "<td>". ($gb['status'] == '5' ? "<i class='fa fa-check-square-o'></i> RESOLVED"
+                                                                                        : ($gb['status'] == '2' ? "<i class='fa fa-exclamation-triangle'></i> PENDING"
+                                                                                        : "<i class='fa fa-exclamation-triangle'></i> PENDING")) ."</td>"
+                                                        . "</tr>";
+                      }
+
+                    }
+
+            
+                  ?>
